@@ -2,18 +2,28 @@ import express from 'express';
 import pkg from 'pg';
 import cors from 'cors';
 const { Pool } = pkg;
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+});
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'crud_db',
-  password: 'postgres',
-  port: 5432,
-});
+app.use(limiter);
+app.use(helmet());
 
 // CREATE
 app.post('/items', async (req, res) => {
