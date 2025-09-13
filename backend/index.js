@@ -20,10 +20,11 @@ const limiter = rateLimit({
 });
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(limiter);
 app.use(helmet());
+app.use(express.static('public'));
 
 // CREATE
 app.post('/items', async (req, res) => {
@@ -62,3 +63,4 @@ app.delete('/items/:id', async (req, res) => {
 app.listen(3002, () => {
   console.log('Backend running on http://localhost:3002');
 });
+<link rel="stylesheet" href="output.css">

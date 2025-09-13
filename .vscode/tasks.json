@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install Tailwind CSS and build config",
+			"type": "shell",
+			"command": "cd frontend && npm init -y && npm install -D tailwindcss postcss autoprefixer && npx tailwindcss init && echo '@tailwind base;\\n@tailwind components;\\n@tailwind utilities;' > tailwind.css && npx tailwindcss -i ./tailwind.css -o ./output.css --minify",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}
